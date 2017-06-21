@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import "persist-js";
+    require("persist-js");
 
     Persist.remove("cookie");
     let store = new Persist.Store("flinders-tools");
