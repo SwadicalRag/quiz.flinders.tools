@@ -8,7 +8,6 @@
                     v-bind:search="search"
                     selected-key="enabled"
                     v-model="selected"
-                    select-all
                     class="elevation-1">
                     <template slot="headers" scope="props">
                         <span v-tooltip:bottom="{ 'html': props.item.text }">
@@ -118,9 +117,10 @@ export default {
             search: "",
             selected: [],
             headers: [
+                { text: 'Enabled', value: 'enabled' },
                 { text: 'Name', value: 'name' },
-                { text: 'Questions', value: '' },
-                { text: 'Actions', value: '' },
+                { text: 'Questions', value: 'questions.length' },
+                { text: 'Actions', value: '', sortable: false },
             ],
             database: [
 
@@ -129,7 +129,23 @@ export default {
     },
     methods: {
         enableQuiz(quizID,enabled) {
-            this.database[quizID].enabled = !this.database[quizID].enabled;
+            // update all
+            if(this.database[quizID].enabled) {
+                this.database[quizID].enabled = false;
+                this.updateQuizzes();
+            }
+            else {
+                for(let i=0;i < this.database.length;i++) {
+                    // this.database[i].enabled = false;
+
+                    for(let i2=0;i2 < this.selected.length;i2++) {
+                        if(this.selected[i2] == this.database[i]) {
+                            this.database[i].enabled = true;
+                            break;
+                        }
+                    }
+                }
+            }
 
             this.shared.setValue("question-db",this.database);
             this.masterJSON = JSON.stringify(this.database);
