@@ -98,6 +98,7 @@ export default {
 
         for(let i1=0;i1 < database.length;i1++) {
             let quiz = database[i1];
+            if(!quiz.enabled) {continue;}
             for(let i2=0;i2 < quiz.questions.length;i2++) {
                 let question = quiz.questions[i2];
 

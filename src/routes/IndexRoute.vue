@@ -132,6 +132,7 @@ export default {
             this.database[quizID].enabled = !this.database[quizID].enabled;
 
             this.shared.setValue("question-db",this.database);
+            this.masterJSON = JSON.stringify(this.database);
         },
         addQuiz() {
             this.addQuizJSONModal = false;
@@ -150,6 +151,7 @@ export default {
 
             this.updateQuizzes();
             this.shared.setValue("question-db",this.database);
+            this.masterJSON = JSON.stringify(this.database);
         },
         deleteQuiz(id) {
             this.database.splice(id,1);
@@ -157,6 +159,7 @@ export default {
             this.updateQuizzes();
 
             this.shared.setValue("question-db",this.database);
+            this.masterJSON = JSON.stringify(this.database);
         },
         updateQuizzes() {
             this.selected = [];
@@ -177,6 +180,7 @@ export default {
 
                 this.updateQuizzes();
                 this.shared.setValue("question-db",this.database);
+                this.masterJSON = JSON.stringify(this.database);
             }
             catch(e) {
                 this.shared.toast(`Couldn't update master JSON database... (${e})`)
