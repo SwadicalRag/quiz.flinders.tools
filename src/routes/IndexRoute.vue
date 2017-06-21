@@ -184,6 +184,13 @@ export default {
     },
     created() {
         this.database = this.shared.getValue("question-db");
+
+        if(!this.database) {
+            this.shared.toast("Initialising database...");
+            this.database = [];
+            this.shared.setValue("question-db",this.database);
+        }
+
         this.masterJSON = JSON.stringify(this.database);
 
         for(let i=0;i < this.database.length;i++) {
