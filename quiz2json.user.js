@@ -3,7 +3,7 @@
 // @match   http://flo.flinders.edu.au/mod/quiz/review.php?*
 // @match   https://flo.flinders.edu.au/mod/quiz/review.php?*
 // @version     1
-// @require  https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @downloadURL https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js
 // @grant       GM_setClipboard
 // @run-at      document-end
 // ==/UserScript==
