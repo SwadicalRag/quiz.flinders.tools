@@ -34,7 +34,7 @@
             <v-flex xs12>
                 <v-btn large primary light @click.native.stop="addQuizJSONModal = true">Add Quiz JSON</v-btn>
                 <v-btn large primary light @click.native.stop="masterJSONModal = true">View/Edit Master JSON Database</v-btn>
-                <v-btn large primary light @click.native.stop="mergeMasterJSONModal = true">Merge Master JSON Database</v-btn>
+                <v-btn large primary light @click.native.stop="importMasterJSONModal = true">Merge Master JSON Database</v-btn>
                 <v-btn large primary light tag="a" href="https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js">Install FLO userscript</v-btn>
             </v-flex>
         </v-layout>
