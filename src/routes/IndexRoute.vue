@@ -101,7 +101,7 @@
         </v-layout>
 
         <v-layout row justify-center>
-            <v-dialog v-model="masterJSONModal">
+            <v-dialog v-model="importMasterJSONModal">
                 <v-card>
                     <v-card-row>
                         <v-card-text>
