@@ -34,6 +34,7 @@
             <v-flex xs12>
                 <v-btn large primary light @click.native.stop="addQuizJSONModal = true">Add Quiz JSON</v-btn>
                 <v-btn large primary light @click.native.stop="masterJSONModal = true">View/Edit Master JSON Database</v-btn>
+                <v-btn large primary light @click.native.stop="mergeMasterJSONModal = true">Merge Master JSON Database</v-btn>
                 <v-btn large primary light tag="a" href="https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js">Install FLO userscript</v-btn>
             </v-flex>
         </v-layout>
@@ -98,6 +99,33 @@
                 </v-card>
             </v-dialog>
         </v-layout>
+
+        <v-layout row justify-center>
+            <v-dialog v-model="masterJSONModal">
+                <v-card>
+                    <v-card-row>
+                        <v-card-text>
+                            <h2 class="title">Merge Master JSON Database</h2>
+                        </v-card-text>
+                    </v-card-row>
+                    <v-card-row>
+                        <v-card-text class="subheading grey--text">
+                            <v-text-field
+                                class="master-json-clipboard-ft"
+                                v-model="importMasterJSON"
+                                name="JSON"
+                                label="JSON"
+                                multi-line></v-text-field>
+                        </v-card-text>
+                    </v-card-row>
+                    <v-card-row actions>
+                        <v-spacer></v-spacer>
+                        <v-btn flat v-on:click.native="importMasterJSONModal = false" class="primary--text">Cancel</v-btn>
+                        <v-btn flat v-on:click.native="mergeMaster" class="primary--text">Update</v-btn>
+                    </v-card-row>
+                </v-card>
+            </v-dialog>
+        </v-layout>
     </v-container>
 </template>
 
@@ -107,8 +135,10 @@ export default {
     data () {
         return {
             masterJSON: "[]",
+            importMasterJSON: "",
             masterJSONModal: false,
             addQuizJSONModal: false,
+            importMasterJSONModal: false,
             curQuiz: {
                 name: "",
                 json: "",
@@ -200,6 +230,23 @@ export default {
             }
             catch(e) {
                 this.shared.toast(`Couldn't update master JSON database... (${e})`)
+            }
+        },
+        mergeMaster() {
+            this.importMasterJSONModal = false;
+            try {
+                let parsed = JSON.parse(this.importMasterJSON);
+
+                for(let i=0;i < parsed.length;i++) {
+                    let quiz = parsed[i];
+
+                    this.database.push(quiz);
+                }
+
+                this.updateQuizzes();
+            }
+            catch(e) {
+                this.shared.toast(`Couldn't merge JSON database... (${e})`)
             }
         },
     },
