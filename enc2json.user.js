@@ -29,13 +29,13 @@ function main() {
         let correctOption;
 
         if(correctOptionRaw.match(/^The correct answer is: /)) {
-            correctOptionRaw = correctOptionRaw.match(/^The correct answer is: (.+)/)[1];
+            correctOptionRaw = correctOptionRaw.match(/^The correct answer is: ([\s\S]+)/)[1].trim().replace(/[\r\n]/g,"").replace(/\s+/g," ");
         }
         else if(correctOptionRaw.trim().match(/^[a-e]$/)) {
             correctOption = correctOptionRaw.trim();
         }
-        else if(correctOptionRaw.trim().match(/^([a-e])\. (.+)$/)) {
-            correctOption = correctOptionRaw.trim().match(/^([a-e])\. (.+)$/)[1];
+        else if(correctOptionRaw.trim().match(/^([a-e])\. ([\s\S]+)$/)) {
+            correctOption = correctOptionRaw.trim().match(/^([a-e])\. ([\s\S]+)$/)[1].replace(/[\r\n]/g,"").replace(/\s+/g," ");
         }
         else if(correctOptionRaw.trim().match(/^[1-5]$/)) {
             correctOption = correctOptionRaw.trim();
@@ -66,14 +66,14 @@ function main() {
                 let text = $(this).text();
 
                 let optionLetter = text.trim().match(/^[a-zA-Z]+/);
-                let optionText = text.trim().match(/^[a-zA-Z]+\.\s*(.+)/);
+                let optionText = text.trim().match(/^[a-zA-Z]+\.\s*([\s\S]+)/);
 
                 if(!(optionLetter && optionText)) {
                     return;
                 }
 
-                optionLetter = optionLetter[0];
-                optionText = optionText[1];
+                optionLetter = optionLetter[0].trim().replace(/[\r\n]/g,"").replace(/\s+/g," ");
+                optionText = optionText[1].trim().replace(/[\r\n]/g,"").replace(/\s+/g," ");
 
                 question.options.push({
                     option: optionText,
@@ -86,7 +86,12 @@ function main() {
             });
         }
 
-        questions.push(question);
+        if(!question.correctOption) {
+            console.log(correctOptionRaw)
+        }
+        else {
+            questions.push(question);
+        }
     });
 
     // console.log(questions);
