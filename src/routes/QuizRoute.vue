@@ -105,6 +105,34 @@ export default {
             if(this.chosenAns !== "") {
                 this.score.total++;
 
+                let lookup1 = {
+                    a: 1,
+                    b: 2,
+                    c: 3,
+                    d: 4,
+                    e: 5,
+                }
+
+                let lookup2 = [
+                    "_",
+                    "a",
+                    "b",
+                    "c",
+                    "d",
+                    "e",
+                ]
+
+                if(this.chosenAns.match(/^[a-zA-Z]*$/)) {
+                    if(!this.question.data.correctOption.match(/^[a-zA-Z]*$/)) {
+                        this.question.data.correctOption = lookup1[this.chosenAns] || this.question.data.correctOption;
+                    }
+                }
+                else if(this.chosenAns.match(/^[0-9]*$/)) {
+                    if(!this.question.data.correctOption.match(/^[0-9]*$/)) {
+                        this.question.data.correctOption = lookup2[this.chosenAns] || this.question.data.correctOption;
+                    }
+                }
+
                 if(this.chosenAns == this.question.data.correctOption) {
                     this.correct = true;
                     this.score.correct++;

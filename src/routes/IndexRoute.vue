@@ -243,6 +243,8 @@ export default {
                     this.database.push(quiz);
                 }
 
+                this.shared.setValue("question-db",this.database);
+                this.masterJSON = JSON.stringify(this.database);
                 this.updateQuizzes();
             }
             catch(e) {
