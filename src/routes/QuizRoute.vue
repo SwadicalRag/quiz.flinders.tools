@@ -100,6 +100,10 @@ export default {
             this.questionIdx = this.getRandomIntInclusive(0,this.questionBank.length - 1);
             this.question = this.questionBank[this.questionIdx];
             this.options = JSON.parse(JSON.stringify(this.question.data.options)); // lazy asshole object copying
+
+            if(this.question.options.length === 0) {
+                return this.next();
+            }
         },
         check() {
             if(this.chosenAns !== "") {
