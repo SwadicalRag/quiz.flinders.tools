@@ -67,14 +67,12 @@
 </template>
 
 <script>
-// import * as md5 from "md5";
-// ^ TODO: hash questions to preserve unique questions
-
 export default {
     name: "quizroute",
     data () {
         return {
             shared: window._SHARED,
+            doneQuestions: {},
             questionBank: [],
             options: [],
             questionIdx: 0,
@@ -101,8 +99,16 @@ export default {
             this.question = this.questionBank[this.questionIdx];
 
             if(this.question.data.options === 0) {
+                this.questionBank.splice(this.questionIdx,1);
                 return this.next();
             }
+
+            if(this.uniqueQuestions && this.doneQuestions[this.question.data.stem]) {
+                this.questionBank.splice(this.questionIdx,1);
+                return this.next();
+            }
+
+            this.doneQuestions[this.question.data.stem] = true;
 
             let src = JSON.parse(JSON.stringify(this.question.data.options)); // lazy asshole object copying
             this.options = [];
@@ -210,6 +216,7 @@ export default {
         },
         resetQuiz() {
             let database = this.shared.getValue("question-db");
+            this.doneQuestions = {};
 
             this.questionBank.splice(0,this.questionBank.length);
 
