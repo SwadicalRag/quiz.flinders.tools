@@ -23,7 +23,8 @@
                                 v-model="props.selected">
                             </v-checkbox>
                         </td>
-                        <td class="text-xs-right">{{ props.item.name }}</td>
+                        <td class="text-xs-right">{{ props.item.quizName }}</td>
+                        <td class="text-xs-right">{{ props.item.fullSubjectCode }}</td>
                         <td class="text-xs-right">{{ props.item.questions.length }}</td>
                         <td class="text-xs-right">
                             <v-btn large error light @click.native.stop="deleteQuiz(props.item.id)">Delete</v-btn>
@@ -45,14 +46,6 @@
                     <v-card-row>
                         <v-card-text>
                             <h2 class="title">Add a Quiz</h2>
-                        </v-card-text>
-                    </v-card-row>
-                    <v-card-row>
-                        <v-card-text class="subheading grey--text">
-                            <v-text-field
-                                v-model="curQuiz.name"
-                                name="Name"
-                                label="Name"></v-text-field>
                         </v-card-text>
                     </v-card-row>
                     <v-card-row>
@@ -148,7 +141,8 @@ export default {
             selected: [],
             headers: [
                 { text: 'Enabled', value: 'enabled' },
-                { text: 'Name', value: 'name' },
+                { text: 'Name', value: 'quizName' },
+                { text: 'Subject Code', value: 'fullSubjectCode' },
                 { text: 'Questions', value: 'questions.length' },
                 { text: 'Actions', value: '', sortable: false },
             ],
@@ -185,11 +179,9 @@ export default {
             try {
                 let parsed = JSON.parse(this.curQuiz.json);
 
-                this.database.push({
-                    name: this.curQuiz.name,
-                    enabled: true,
-                    questions: parsed,
-                });
+                parsed.enabled = true;
+
+                this.database.push(parsed);
             }
             catch(e) {
                 this.shared.toast(`Couldn't add quiz... (${e})`)

@@ -1,7 +1,7 @@
 {
   "name": "quiz.flinders.tools",
   "description": "Quiz toolkit for Flinders University's version of Moodle",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "swadical",
   "private": true,
   "scripts": {

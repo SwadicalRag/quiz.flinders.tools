@@ -99,43 +99,84 @@ export default {
         randomQuestion() {
             this.questionIdx = this.getRandomIntInclusive(0,this.questionBank.length - 1);
             this.question = this.questionBank[this.questionIdx];
-            this.options = JSON.parse(JSON.stringify(this.question.data.options)); // lazy asshole object copying
 
-            if(this.question.options.length === 0) {
+            if(this.question.data.options === 0) {
                 return this.next();
             }
+
+            let src = JSON.parse(JSON.stringify(this.question.data.options)); // lazy asshole object copying
+            this.options = [];
+
+            while(src.length !== 0) {
+                let i = this.getRandomIntInclusive(0,src.length - 1);
+
+                if(src[i]) {
+                    this.options.push(src[i]);
+                    src.splice(i,1);
+                }
+                else {
+                    break;
+                }
+            }
+
+            let lookup1 = {
+                a: 1,
+                b: 2,
+                c: 3,
+                d: 4,
+                e: 5,
+                f: 6,
+                g: 7,
+                h: 8,
+                i: 9,
+                j: 10,
+                k: 11,
+            };
+
+            let lookup2 = [
+                "_",
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f",
+                "g",
+                "h",
+                "i",
+                "j",
+                "k",
+            ];
+
+            // standardise options
+            if(!this.question.data.correctOption.match(/^[0-9]*$/)) {
+                this.question.data.correctOption = lookup2[this.question.data.correctOption] || this.question.data.correctOption;
+
+                for(let i=0;i < this.options.length;i++) {
+                    let letter = this.options[i].letter;
+                    this.options[i].letter = lookup2[letter] || letter;
+                }
+            }
+
+            // shuffle options
+            let newAns;
+
+            for(let i=0;i < this.options.length;i++) {
+                if(this.options[i].letter == this.question.data.correctOption) {
+                    if(lookup1[this.question.data.correctOption]) {
+                        newAns = lookup2[i + 1];
+                    }
+                }
+                if(lookup1[this.options[i].letter]) {
+                    this.options[i].letter = lookup2[i + 1] || this.options[i].letter;
+                }
+            }
+
+            this.question.data.correctOption = newAns || this.question.data.correctOption;
         },
         check() {
             if(this.chosenAns !== "") {
                 this.score.total++;
-
-                let lookup1 = {
-                    a: 1,
-                    b: 2,
-                    c: 3,
-                    d: 4,
-                    e: 5,
-                }
-
-                let lookup2 = [
-                    "_",
-                    "a",
-                    "b",
-                    "c",
-                    "d",
-                    "e",
-                ]
-
-                if(this.chosenAns.match(/^[a-zA-Z]*$/)) {
-                    if(!this.question.data.correctOption.match(/^[a-zA-Z]*$/)) {
-                        this.question.data.correctOption = lookup1[this.chosenAns] || this.question.data.correctOption;
-                    }
-                }
-                else if(this.chosenAns.match(/^[0-9]*$/)) {
-                    if(!this.question.data.correctOption.match(/^[0-9]*$/)) {
-                        this.question.data.correctOption = lookup2[this.chosenAns] || this.question.data.correctOption;
-                    }
-                }
 
                 if(this.chosenAns == this.question.data.correctOption) {
                     this.correct = true;
@@ -148,7 +189,7 @@ export default {
                 }
 
                 for(let i=0;i < this.options.length;i++) {
-                    if(this.options[i].letter == this.questions.data.correctOption) {
+                    if(this.options[i].letter == this.question.data.correctOption) {
                         this.$set(this.options[i],"highlight",true);
                     }
                 }
@@ -180,7 +221,7 @@ export default {
 
                     this.questionBank.push({
                         data: question,
-                        from: quiz.name,
+                        from: `${quiz.quizName} (${quiz.fullSubjectCode})`,
                     });
                 }
             }
