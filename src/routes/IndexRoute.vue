@@ -39,6 +39,92 @@
                 <v-btn large primary light @click.native.stop="importMasterJSONModal = true">Merge Master JSON Database</v-btn>
                 <v-btn large primary light tag="a" href="https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js">Install FLO userscript</v-btn>
             </v-flex>
+            <v-flex xs12>
+                <br><br><br><br>
+                <h3>Instructions</h3>
+
+                <h4>Part A: Installing a userscript addon</h4>
+                <h5>Chrome</h5>
+                Install <a href="https://tampermonkey.net/">Tampermonkey</a>
+                <br><br>
+                <h5>Firefox</h5>
+                Install <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Violentmonkey</a>
+                or <a href="https://tampermonkey.net/">Tampermonkey</a>
+                <br><br>
+                <h5>Some other browser</h5>
+                get with the times, fam, use a REAL browser
+
+                <br><br>
+
+                <h4>Part B: Installing/updating the Quiz2JSON script</h4>
+                We need this to quickly scrape the quizzes straight from FLO/Moodle.
+                <br>
+                Just click on the "Install FLO Userscript" button above
+
+                <br><br>
+
+                <h4>Part C: Importing a quiz</h4>
+                <ol>
+                    <li>Go to a completed quiz in FLO</li>
+                    <li>Go to the quiz review page</li>
+                    <li>
+                        Look for "Copy quiz to clipboard" right under "Finish review".
+                        If you don't see this, make sure you did Part A and Part B correctly.
+                        Otherwise get in touch <a href="https://github.com/SwadicalRag/quiz.flinders.tools/issues/new">here</a>
+                    </li>
+                    <li>Click the "Copy quiz to clipboard" button</li>
+                    <li>Navigate back here</li>
+                    <li>Click the "Add Quiz JSON" button above</li>
+                    <li>Select the "JSON" text box and paste whatever is in your clipbard into it (Control+V on windows, or right click and select Paste)</li>
+                    <li>Click "Add"</li>
+                </ol>
+
+                <br><br>
+
+                <h4>Part D: Doing a quiz</h4>
+                <ol>
+                    <li>
+                        Click on the sidebar icon on the top right of this page
+                        (or swipe right if you're on mobile).
+                    </li>
+                    <li>
+                        Click on "Quiz Me"
+                    </li>
+                </ol>
+
+                Your quiz should start automatically. That page shouldn't need extra instructions. It's that simple to use!
+
+                <br><br>
+
+                <h4>Part E: Sharing a quiz</h4>
+                <ol>
+                    <li>
+                        Click on "Merge Master JSON Database"
+                    </li>
+                    <li>
+                        Select everything inside the text box labelled "JSON"
+                        and copy it to your clipboard (Control + C on windows)
+                    </li>
+                    <li>
+                        Click Cancel to go back
+                    </li>
+                    <li>
+                        Give whatever is in your clipboard to your friend.
+                        You can upload the contents of the clipboard freely through <a href="http://gist.github.com/">here</a>
+                    </li>
+                </ol>
+
+                <br><br>
+
+                <h4>Part F: Loading a shared quiz</h4>
+                <ol>
+                    <li>
+                        Click on "View/Edit Master JSON Database"
+                    </li>
+                    <li>Select the "JSON" text box and paste whatever your friend gave you into it (Control+V on windows, or right click and select Paste)</li>
+                    <li>Click "Update"</li>
+                </ol>
+            </v-flex>
         </v-layout>
 
         <v-layout row justify-center>
