@@ -268,6 +268,7 @@ export default {
                 let parsed = JSON.parse(this.curQuiz.json);
 
                 parsed.enabled = true;
+                parsed.questions = parsed.questions || [];
 
                 this.database.push(parsed);
             }
@@ -320,7 +321,10 @@ export default {
                 for(let i=0;i < parsed.length;i++) {
                     let quiz = parsed[i];
 
-                    this.database.push(quiz);
+                    if(quiz) {
+                        quiz.questions = quiz.questions || [];
+                        this.database.push(quiz);
+                    }
                 }
 
                 this.shared.setValue("question-db",this.database);
