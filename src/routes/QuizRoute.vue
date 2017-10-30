@@ -228,7 +228,7 @@ export default {
 
                     this.questionBank.push({
                         data: question,
-                        from: `${quiz.quizName} (${quiz.fullSubjectCode})`,
+                        from: `${quiz.quizName} (${quiz.fullSubjectCode}) [ID:${quiz.fromUserID}]`,
                     });
                 }
             }

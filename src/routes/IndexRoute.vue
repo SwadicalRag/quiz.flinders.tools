@@ -25,6 +25,7 @@
                         </td>
                         <td class="text-xs-right">{{ props.item.quizName }}</td>
                         <td class="text-xs-right">{{ props.item.fullSubjectCode }}</td>
+                        <td class="text-xs-right">{{ props.item.fromUserID }}</td>
                         <td class="text-xs-right">{{ props.item.questions.length }}</td>
                         <td class="text-xs-right">
                             <v-btn large error light @click.native.stop="deleteQuiz(props.item.id)">Delete</v-btn>
@@ -143,6 +144,7 @@ export default {
                 { text: 'Enabled', value: 'enabled' },
                 { text: 'Name', value: 'quizName' },
                 { text: 'Subject Code', value: 'fullSubjectCode' },
+                { text: 'User ID', value: 'fromUserID' },
                 { text: 'Questions', value: 'questions.length' },
                 { text: 'Actions', value: '', sortable: false },
             ],
