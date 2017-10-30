@@ -2,8 +2,9 @@
 // @name        Quiz2JSON
 // @match       http://flo.flinders.edu.au/mod/quiz/review.php?*
 // @match       https://flo.flinders.edu.au/mod/quiz/review.php?*
-// @version     1.1
+// @version     1.2
 // @downloadURL https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js
+// @updateURL   https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js
 // @grant       GM_setClipboard
 // @grant       GM_getValue
 // @grant       GM_setValue
