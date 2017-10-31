@@ -59,6 +59,7 @@
                         <v-btn flat class="red--text darken-1" @click.native.stop="resetQuiz">Reset Quiz</v-btn>
                         <v-btn flat class="orange--text darken-1" @click.native.stop="uniqueQuestions = !uniqueQuestions" v-if="uniqueQuestions">Disable Unique Questions</v-btn>
                         <v-btn flat class="green--text darken-1" @click.native.stop="uniqueQuestions = !uniqueQuestions" v-if="!uniqueQuestions">Enable Unique Questions</v-btn>
+                        <v-btn flat class="blue--text darken-1" @click.native.stop="setupQuestion(false)">Unshuffle options</v-btn>
                     </v-card-row>
                 </v-card>
             </v-flex>
@@ -96,25 +97,35 @@ export default {
         },
         randomQuestion() {
             this.questionIdx = this.getRandomIntInclusive(0,this.questionBank.length - 1);
-            this.question = this.questionBank[this.questionIdx];
+            let question = this.questionBank[this.questionIdx];
 
-            if(this.question.data.options === 0) {
+            if(question.data.options === 0) {
                 this.questionBank.splice(this.questionIdx,1);
                 return this.next();
             }
 
-            if(this.uniqueQuestions && this.doneQuestions[this.question.data.stem]) {
+            if(this.uniqueQuestions && this.doneQuestions[question.data.stem]) {
                 this.questionBank.splice(this.questionIdx,1);
                 return this.next();
             }
 
-            this.doneQuestions[this.question.data.stem] = true;
+            this.doneQuestions[question.data.stem] = true;
 
-            let src = JSON.parse(JSON.stringify(this.question.data.options)); // lazy asshole object copying
+            return this.setupQuestion(true);
+        },
+        setupQuestion(shuffle) {
+            this.question = JSON.parse(JSON.stringify(this.questionBank[this.questionIdx])); // lazy asshole object copying
+
+            let src = this.question.data.options;
+
             this.options = [];
 
+            let i = 0;
+
             while(src.length !== 0) {
-                let i = this.getRandomIntInclusive(0,src.length - 1);
+                if(shuffle) {
+                    i = this.getRandomIntInclusive(0,src.length - 1);
+                }
 
                 if(src[i]) {
                     this.options.push(src[i]);
