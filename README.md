@@ -2,6 +2,8 @@
 
 > Quiz toolkit for Flinders University's version of Moodle
 
+![screenshot](https://i.imgur.com/vltdjjW.png)
+
 ## Build Setup
 
 ``` bash
