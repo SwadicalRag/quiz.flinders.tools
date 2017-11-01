@@ -321,6 +321,7 @@ export default {
 
             for(let i=0;i < this.database.length;i++) {
                 let quiz = this.database[i];
+                delete quiz.id;
                 let signature = hash(quiz);
 
                 existingQuizSignatures[signature] = true;
@@ -331,6 +332,7 @@ export default {
 
                 for(let i=0;i < parsed.length;i++) {
                     let quiz = parsed[i];
+                    delete quiz.id;
                     let signature = hash(quiz);
 
                     if(quiz && !existingQuizSignatures[signature]) {
