@@ -96,7 +96,18 @@ export default {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         randomQuestion() {
+            if(this.questionBank.length !== 0) {
+                delete this.question;
+                return; // we're done
+            }
+
             this.questionIdx = this.getRandomIntInclusive(0,this.questionBank.length - 1);
+
+            if(!question) {
+                this.questionBank.splice(this.questionIdx,1);
+                return this.next();
+            }
+
             let question = this.questionBank[this.questionIdx];
 
             if(question.data.options === 0) {
