@@ -210,6 +210,8 @@
 </template>
 
 <script>
+import * as hash from "object-hash";
+
 export default {
     name: "indexroute",
     data () {
@@ -315,15 +317,26 @@ export default {
         },
         mergeMaster() {
             this.importMasterJSONModal = false;
+            let existingQuizSignatures = {};
+
+            for(let i=0;i < this.database.length;i++) {
+                let quiz = this.database[i];
+                let signature = hash(quiz);
+
+                existingQuizSignatures[signature] = true;
+            }
+
             try {
                 let parsed = JSON.parse(this.importMasterJSON);
 
                 for(let i=0;i < parsed.length;i++) {
                     let quiz = parsed[i];
+                    let signature = hash(quiz);
 
-                    if(quiz) {
+                    if(quiz && !existingQuizSignatures[signature]) {
                         quiz.questions = quiz.questions || [];
                         this.database.push(quiz);
+                        existingQuizSignatures[signature] = true;
                     }
                 }
 
