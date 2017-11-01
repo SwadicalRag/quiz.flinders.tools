@@ -99,7 +99,7 @@
                 <h4>Part E: Sharing a quiz</h4>
                 <ol>
                     <li>
-                        Click on "Merge Master JSON Database"
+                        Click on "View/Edit Master JSON Database"
                     </li>
                     <li>
                         Select everything inside the text box labelled "JSON"
@@ -119,7 +119,7 @@
                 <h4>Part F: Loading a shared quiz</h4>
                 <ol>
                     <li>
-                        Click on "View/Edit Master JSON Database"
+                        Click on "Merge Master JSON Database"
                     </li>
                     <li>Select the "JSON" text box and paste whatever your friend gave you into it (Control+V on windows, or right click and select Paste)</li>
                     <li>Click "Update"</li>
