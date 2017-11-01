@@ -2,7 +2,7 @@
 // @name        Quiz2JSON
 // @match       http://flo.flinders.edu.au/mod/quiz/review.php?*
 // @match       https://flo.flinders.edu.au/mod/quiz/review.php?*
-// @version     1.2
+// @version     1.3
 // @downloadURL https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js
 // @updateURL   https://github.com/SwadicalRag/quiz.flinders.tools/raw/master/quiz2json.user.js
 // @grant       GM_setClipboard
@@ -79,7 +79,7 @@ function main() {
 
     data.fromUserName = $(".usertext").text();
 
-    $(".que").each(function() {
+    let collector = function() {
         let question = {};
 
         question.stem = $(this).find(".qtext").text().trim();
@@ -106,7 +106,8 @@ function main() {
         }
 
         $(this).find(".answer div").each(function() {
-            let text = $(this).text();
+            let text = $(this).find("label").text();
+            if(!text) {return;}
 
             let optionLetter = text.trim().match(/^[a-zA-Z]+/)[0];
 
@@ -116,6 +117,7 @@ function main() {
                 question.options.push({
                     option: "",
                     letter: text.trim(),
+                    feedback: $(this).find(".specificfeedback").text(),
                 });
 
                 if(text.trim() == correctOptionRaw) {
@@ -143,9 +145,23 @@ function main() {
         }
 
         questions.push(question);
-    });
+    };
 
-    // console.log(questions);
+    $(".que.multichoice").each(collector);
+    $(".que.truefalse").each(collector);
+
+    let hasShortAnswer = $(".que.shortanswer").length > 0;
+    let hasMatching = $(".que.match").length > 0;
+
+    let warnings = "";
+
+    if(hasShortAnswer) {
+        warnings += "(warning, short answer questions are not copied)";
+    }
+    if(hasMatching) {
+        warnings += " (warning, extended matching questions are not copied)";
+    }
+
     function __internal_copyQuizToClipboard() {
         __flo_q2j_clip(data);
     }
@@ -156,6 +172,13 @@ function main() {
             .attr("href","javascript:copyQuizToClipboard()")
             .text("Copy quiz to clipboard")
     );
+
+    if(warnings) {
+        $("#block-region-side-post .othernav").append(
+            $("<i></i>")
+                .text(warnings)
+        );
+    }
 }
 
 // Call main() in the page scope
