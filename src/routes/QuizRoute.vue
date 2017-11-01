@@ -96,7 +96,7 @@ export default {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         randomQuestion() {
-            if(this.questionBank.length !== 0) {
+            if(this.questionBank.length == 0) {
                 delete this.question;
                 return; // we're done
             }
