@@ -103,12 +103,12 @@ export default {
 
             this.questionIdx = this.getRandomIntInclusive(0,this.questionBank.length - 1);
 
+            let question = this.questionBank[this.questionIdx];
+
             if(!question) {
                 this.questionBank.splice(this.questionIdx,1);
                 return this.next();
             }
-
-            let question = this.questionBank[this.questionIdx];
 
             if(question.data.options === 0) {
                 this.questionBank.splice(this.questionIdx,1);
